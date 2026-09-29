@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 
+const types = ["Wedding", "Engagement", "Proposal", "Portrait", "Fashion / Editorial", "Brand content", "Reels & video", "Other"];
+
 export default function ContactForm() {
   const [status, setStatus] = useState({ state: "idle", message: "" });
 
@@ -17,7 +19,7 @@ export default function ContactForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       form.reset();
-      setStatus({ state: "sent", message: "Message sent. I'll reply within two working days." });
+      setStatus({ state: "sent", message: "Inquiry sent. I'll get back to you with availability and details." });
     } catch (err) {
       setStatus({ state: "error", message: `${err.message} Check the fields and try again.` });
     }
@@ -27,9 +29,19 @@ export default function ContactForm() {
     <form onSubmit={onSubmit}>
       <label>Name<input name="name" required autoComplete="name" /></label>
       <label>Email<input name="email" type="email" required autoComplete="email" /></label>
-      <label>Tell me about your project<textarea name="message" required minLength={10} /></label>
+      <label>Event / Session
+        <select name="type" required defaultValue="">
+          <option value="" disabled>Choose one</option>
+          {types.map((t) => <option key={t}>{t}</option>)}
+        </select>
+      </label>
+      <div className="two">
+        <label>Date<input name="date" type="date" /></label>
+        <label>Location<input name="location" /></label>
+      </div>
+      <label>Message<textarea name="message" required minLength={10} /></label>
       <button type="submit" disabled={status.state === "sending"}>
-        {status.state === "sending" ? "Sending…" : "Send message"}
+        {status.state === "sending" ? "Sending…" : "Send inquiry"}
       </button>
       <p className="status" role="status">{status.message}</p>
     </form>

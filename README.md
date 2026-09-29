@@ -1,4 +1,4 @@
-# Photographer portfolio (Next.js)
+# Adrit Sinani — Photography & Films (Next.js)
 
 ## Run
     npm install
@@ -6,7 +6,7 @@
     npm run build && npm start
 
 ## Customize
-- **Name, tagline, email, hero and photos:** `lib/site.js`
+- **Name, tagline, contact, services, hero and photos:** `lib/site.js`; the About, Approach and Experience texts are in `app/page.js`
 - **About text:** `app/page.js`
 - **Colors and fonts:** CSS variables in `app/globals.css`, font imports in `app/layout.js`
 - **Your own images:** put files in `public/photos/` and use paths like `/photos/shot.jpg` (then the `remotePatterns` block in `next.config.mjs` can go)

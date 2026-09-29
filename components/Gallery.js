@@ -4,7 +4,8 @@ import { site } from "@/lib/site";
 export default function Gallery() {
   return (
     <section id="work" className="wrap">
-      <h2>Selected work</h2>
+      <h2>A collection of moments.</h2>
+      <p className="muted lead">Weddings, engagements, portraits, fashion and visual stories.</p>
       <div className="grid">
         {site.photos.map((p) => (
           <figure key={p.src}>
@@ -13,6 +14,7 @@ export default function Gallery() {
           </figure>
         ))}
       </div>
+      <a className="btn" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">View all work</a>
     </section>
   );
 }
