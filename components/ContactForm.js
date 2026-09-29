@@ -21,12 +21,13 @@ export default function ContactForm() {
       form.reset();
       setStatus({ state: "sent", message: "Inquiry sent. I'll get back to you with availability and details." });
     } catch (err) {
-      setStatus({ state: "error", message: `${err.message} Check the fields and try again.` });
+      setStatus({ state: "error", message: `${err.message} You can also reach me on WhatsApp.` });
     }
   }
 
   return (
     <form onSubmit={onSubmit}>
+      <input className="hp" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <label>Name<input name="name" required autoComplete="name" /></label>
       <label>Email<input name="email" type="email" required autoComplete="email" /></label>
       <label>Event / Session

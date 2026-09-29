@@ -4,12 +4,36 @@ import Image from "next/image";
 import { photos, categories } from "@/lib/photos";
 import { site } from "@/lib/site";
 
+// 2 columns on phones, 3 on desktop
+function useColumns() {
+  const [n, setN] = useState(2);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1000px)");
+    const update = () => setN(mq.matches ? 3 : 2);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return n;
+}
+
 export default function Gallery() {
   const [cat, setCat] = useState("All");
   const [open, setOpen] = useState(null);
   const touchX = useRef(null);
-  const list = cat === "All" ? photos : photos.filter((p) => p.cat === cat);
+  const cols = useColumns();
+  const list = cat === "All" ? photos : photos.filter((p) => p.cats.includes(cat));
   const isOpen = open !== null;
+
+  // Masonry that keeps reading order: each photo goes into the currently shortest column
+  const heights = Array(cols).fill(0);
+  const columns = Array.from({ length: cols }, () => []);
+  list.forEach((p, i) => {
+    let k = 0;
+    for (let j = 1; j < cols; j++) if (heights[j] < heights[k]) k = j;
+    columns[k].push([p, i]);
+    heights[k] += p.h / p.w;
+  });
 
   const close = useCallback(() => setOpen(null), []);
   const step = useCallback((d) => setOpen((i) => (i === null ? null : (i + d + list.length) % list.length)), [list.length]);
@@ -40,10 +64,14 @@ export default function Gallery() {
       </div>
 
       <div className="grid">
-        {list.map((p, i) => (
-          <button key={p.src} className="tile" onClick={() => setOpen(i)} aria-label={`Open photo: ${p.alt}`}>
-            <Image src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(min-width:1000px) 30vw, 50vw" />
-          </button>
+        {columns.map((col, ci) => (
+          <div className="col" key={ci}>
+            {col.map(([p, i]) => (
+              <button key={p.src} className="tile" onClick={() => setOpen(i)} aria-label={`Open photo: ${p.alt}`}>
+                <Image src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(min-width:1000px) 30vw, 50vw" />
+              </button>
+            ))}
+          </div>
         ))}
       </div>
       <a className="btn" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">View all work</a>

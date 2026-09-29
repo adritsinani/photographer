@@ -23,3 +23,13 @@ Until they are added, the site uses Jost (a similar geometric sans) as a fallbac
 ## Photos
 Photos live in `public/photos/` and are listed in `lib/photos.js` (`cat` sets the filter category).
 Your portrait for the About section: put it in `public/photos/` and set `about.photo` in `lib/site.js`.
+
+## Contact form emails (Resend)
+1. Create a free account at resend.com **with adritsinani@gmail.com** and create an API key.
+2. In Vercel: Project > Settings > Environment Variables, add `RESEND_API_KEY` = your key. Redeploy.
+Inquiries arrive at adritsinani@gmail.com (change with `CONTACT_TO`). Replying answers the visitor directly.
+With the default sender (onboarding@resend.dev) Resend only delivers to your own signup email, which is exactly this case.
+
+## Analytics
+`@vercel/analytics` is already in package.json and `<Analytics />` is in `app/layout.js`.
+Enable it in Vercel: Project > Analytics > Enable. Data appears after the next visits.

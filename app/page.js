@@ -60,9 +60,14 @@ export default function Home() {
           <div>
             <h2>Let's create something meaningful.</h2>
             <p className="muted">Have a wedding, proposal, session or project coming up? Tell me a little about it and I'll get back to you with availability and details.</p>
+            <div className="cta-row">
+              <a className="btn" href={site.whatsapp} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+              <a className="btn outline" href="tel:+355683302020">Call {site.phone}</a>
+            </div>
             <ul className="details">
               <li>Email<br /><a href={`mailto:${site.email}`}>{site.email}</a></li>
               <li>Instagram<br /><a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">@{site.instagram}</a></li>
+              <li>Phone / WhatsApp<br /><a href="tel:+355683302020">{site.phone}</a></li>
               <li>Location<br />{site.location}. Available worldwide.</li>
             </ul>
           </div>
