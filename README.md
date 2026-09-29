@@ -14,3 +14,12 @@
 
 ## Deploy
 Push to GitHub and import into Vercel (zero config), or run `npm run build` and host anywhere that runs Node.
+
+## Font: Glacial Indifference
+Download the free font (Hanken Design Co.) and copy these files into `public/fonts/`:
+`GlacialIndifference-Regular.otf` and `GlacialIndifference-Bold.otf`.
+Until they are added, the site uses Jost (a similar geometric sans) as a fallback.
+
+## Photos
+Photos live in `public/photos/` and are listed in `lib/photos.js` (`cat` sets the filter category).
+Your portrait for the About section: put it in `public/photos/` and set `about.photo` in `lib/site.js`.

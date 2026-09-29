@@ -11,8 +11,18 @@ export default function Home() {
 
       <section id="about" className="wrap">
         <div className="split">
-          <h2>About Me</h2>
+          <div className="about-photo">
+            {site.about.photo ? (
+              <Image className="bw" src={site.about.photo} alt={site.name} fill sizes="(min-width:850px) 40vw, 100vw" style={{ objectFit: "cover" }} />
+            ) : (
+              <div className="ph">
+                <svg viewBox="0 0 120 90" width="120" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="2"><rect x="10" y="26" width="100" height="56" rx="6" /><path d="M40 26l6-12h28l6 12" /><circle cx="60" cy="54" r="18" /><circle cx="60" cy="54" r="9" /></g></svg>
+                <span>Shot on Sony A7 V</span>
+              </div>
+            )}
+          </div>
           <div className="prose">
+            <h2>About Me</h2>
             <p>I’m Adrit, a photographer and filmmaker based in Vlorë, Albania.</p>
             <p>I focus on creating photographs and films that feel natural, timeless and personal. From weddings and intimate proposals to portraits, fashion and brand content, I look for the moments that happen naturally rather than forcing them.</p>
             <p>My approach is simple: keep things relaxed, pay attention to the details and create images that still feel meaningful years from now.</p>

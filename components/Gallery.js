@@ -1,20 +1,72 @@
+"use client";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
+import { photos, categories } from "@/lib/photos";
 import { site } from "@/lib/site";
 
 export default function Gallery() {
+  const [cat, setCat] = useState("All");
+  const [open, setOpen] = useState(null);
+  const touchX = useRef(null);
+  const list = cat === "All" ? photos : photos.filter((p) => p.cat === cat);
+  const isOpen = open !== null;
+
+  const close = useCallback(() => setOpen(null), []);
+  const step = useCallback((d) => setOpen((i) => (i === null ? null : (i + d + list.length) % list.length)), [list.length]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [isOpen, close, step]);
+
+  const current = isOpen ? list[open] : null;
+
   return (
     <section id="work" className="wrap">
       <h2>A collection of moments.</h2>
       <p className="muted lead">Weddings, engagements, portraits, fashion and visual stories.</p>
+
+      <div className="filters" role="group" aria-label="Filter photos">
+        {["All", ...categories].map((c) => (
+          <button key={c} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
+        ))}
+      </div>
+
       <div className="grid">
-        {site.photos.map((p) => (
-          <figure key={p.src}>
-            <Image src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(min-width:1000px) 30vw, (min-width:600px) 45vw, 100vw" />
-            <figcaption>{p.title}</figcaption>
-          </figure>
+        {list.map((p, i) => (
+          <button key={p.src} className="tile" onClick={() => setOpen(i)} aria-label={`Open photo: ${p.alt}`}>
+            <Image src={p.src} alt={p.alt} width={p.w} height={p.h} sizes="(min-width:1000px) 30vw, 50vw" />
+          </button>
         ))}
       </div>
       <a className="btn" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">View all work</a>
+
+      {current && (
+        <div
+          className="lb" role="dialog" aria-modal="true" aria-label="Photo viewer"
+          onClick={(e) => e.target === e.currentTarget && close()}
+          onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+          }}
+        >
+          <div className="lb-stage" onClick={close}>
+            <Image src={current.src} alt={current.alt} fill sizes="100vw" style={{ objectFit: "contain" }} priority />
+          </div>
+          <button className="lb-btn lb-close" onClick={close} aria-label="Close">×</button>
+          <button className="lb-btn lb-prev" onClick={() => step(-1)} aria-label="Previous photo">‹</button>
+          <button className="lb-btn lb-next" onClick={() => step(1)} aria-label="Next photo">›</button>
+          <p className="lb-count">{open + 1} / {list.length}</p>
+        </div>
+      )}
     </section>
   );
 }
