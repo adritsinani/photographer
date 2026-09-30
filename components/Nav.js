@@ -26,7 +26,7 @@ export default function Nav({ name }) {
   return (
     <div className={`nav${solid || open ? " solid" : ""}`}>
       <a href="#top" aria-label={name} onClick={() => setOpen(false)}>
-        <Image src="/logo.png" alt={name} width={112} height={88} priority style={{ height: 48, width: "auto" }} />
+        <Image src="/logo-dark.png" alt={name} width={112} height={88} priority style={{ height: 48, width: "auto" }} />
       </a>
       <button className="burger" aria-expanded={open} aria-controls="menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>
         <span /><span /><span />

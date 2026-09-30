@@ -17,18 +17,22 @@ function useColumns() {
   return n;
 }
 
+const PREVIEW = 12; // photos shown before "View all"
+
 export default function Gallery() {
   const [cat, setCat] = useState("All");
   const [open, setOpen] = useState(null);
+  const [showAll, setShowAll] = useState(false);
   const touchX = useRef(null);
   const cols = useColumns();
   const list = cat === "All" ? photos : photos.filter((p) => p.cats.includes(cat));
+  const view = showAll ? list : list.slice(0, PREVIEW);
   const isOpen = open !== null;
 
   // Masonry that keeps reading order: each photo goes into the currently shortest column
   const heights = Array(cols).fill(0);
   const columns = Array.from({ length: cols }, () => []);
-  list.forEach((p, i) => {
+  view.forEach((p, i) => {
     let k = 0;
     for (let j = 1; j < cols; j++) if (heights[j] < heights[k]) k = j;
     columns[k].push([p, i]);
@@ -36,7 +40,7 @@ export default function Gallery() {
   });
 
   const close = useCallback(() => setOpen(null), []);
-  const step = useCallback((d) => setOpen((i) => (i === null ? null : (i + d + list.length) % list.length)), [list.length]);
+  const step = useCallback((d) => setOpen((i) => (i === null ? null : (i + d + view.length) % view.length)), [view.length]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,7 +54,7 @@ export default function Gallery() {
     return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [isOpen, close, step]);
 
-  const current = isOpen ? list[open] : null;
+  const current = isOpen ? view[open] : null;
 
   return (
     <section id="work" className="wrap">
@@ -59,7 +63,7 @@ export default function Gallery() {
 
       <div className="filters" role="group" aria-label="Filter photos">
         {["All", ...categories].map((c) => (
-          <button key={c} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
+          <button key={c} aria-pressed={cat === c} onClick={() => { setCat(c); setShowAll(false); setOpen(null); }}>{c}</button>
         ))}
       </div>
 
@@ -74,7 +78,12 @@ export default function Gallery() {
           </div>
         ))}
       </div>
-      <a className="btn" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">View all work</a>
+      <div className="cta-row gallery-cta">
+        {view.length < list.length && (
+          <button className="btn" onClick={() => setShowAll(true)}>View all work</button>
+        )}
+        <a className="btn outline" href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">Follow on Instagram</a>
+      </div>
 
       {current && (
         <div
@@ -92,7 +101,7 @@ export default function Gallery() {
           <button className="lb-btn lb-close" onClick={close} aria-label="Close">×</button>
           <button className="lb-btn lb-prev" onClick={() => step(-1)} aria-label="Previous photo">‹</button>
           <button className="lb-btn lb-next" onClick={() => step(1)} aria-label="Next photo">›</button>
-          <p className="lb-count">{open + 1} / {list.length}</p>
+          <p className="lb-count">{open + 1} / {view.length}</p>
         </div>
       )}
     </section>

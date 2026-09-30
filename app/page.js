@@ -23,9 +23,10 @@ export default function Home() {
           </div>
           <div className="prose">
             <h2>About Me</h2>
-            <p>I’m Adrit, a photographer and filmmaker based in Vlorë, Albania.</p>
-            <p>I focus on creating photographs and films that feel natural, timeless and personal. From weddings and intimate proposals to portraits, fashion and brand content, I look for the moments that happen naturally rather than forcing them.</p>
-            <p>My approach is simple: keep things relaxed, pay attention to the details and create images that still feel meaningful years from now.</p>
+            <p>I’m Adrit, a photographer and filmmaker from Vlorë, Albania.</p>
+            <p>Weddings, quiet proposals, portraits, fashion, brand stories: every frame aims to be timeless, honest and close to the heart.</p>
+            <p>The real magic lives in between, in a glance, a trembling smile, a touch that says everything. Such moments arrive unannounced and can never be forced.</p>
+            <p>Relaxed sessions and a careful eye for detail keep the images alive, so they can still move you years from now.</p>
           </div>
         </div>
       </section>
@@ -76,7 +77,7 @@ export default function Home() {
       </section>
 
       <footer className="footer wrap">
-        <Image className="logo-footer" src="/logo.png" alt="" width={112} height={88} style={{ height: 48, width: "auto" }} />
+        <Image className="logo-footer" src="/logo-dark.png" alt="" width={112} height={88} style={{ height: 48, width: "auto" }} />
         <p><strong>{site.name}</strong><br />Photography & Films</p>
         <p>{site.disciplines}<br />Vlorë · Albania · Worldwide</p>
         <p>

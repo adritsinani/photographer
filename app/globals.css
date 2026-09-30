@@ -3,12 +3,9 @@
 @font-face { font-family: "Glacial Indifference"; src: url("/fonts/GlacialIndifference-Bold.otf") format("opentype"); font-weight: 700; font-display: swap; }
 
 :root {
-  --paper: #eef0ee; --ink: #17201d; --muted: #5d6a65; --line: #cfd6d2; --accent: #27456b;
+  --paper: #f2ece1; --ink: #0c0c0c; --muted: #3d3a35; --line: #d8cfbf; --accent: #0c0c0c;
   --pad: clamp(1.25rem, 5vw, 4rem);
   --font: "Glacial Indifference", var(--font-fallback), system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --paper: #121816; --ink: #e8ece9; --muted: #93a19b; --line: #2b3632; --accent: #8fb0dc; }
 }
 * { box-sizing: border-box; margin: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
@@ -96,7 +93,6 @@ form button { justify-self: start; }
 .footer { border-top: 1px solid var(--line); padding-block: 3rem; color: var(--muted); font-size: 1rem; display: grid; gap: 1.5rem; }
 @media (min-width: 850px) { .footer { grid-template-columns: auto 1fr 1fr 1fr auto; align-items: start; gap: 3rem; } }
 .logo-footer { filter: invert(1); }
-@media (prefers-color-scheme: dark) { .logo-footer { filter: none; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* Navigation: fixed bar, links at the right on desktop, hamburger on mobile */
@@ -127,3 +123,17 @@ form button { justify-self: start; }
 .col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: .75rem; }
 .tile { margin: 0; }
 @media (min-width: 1000px) { .grid, .col { gap: 1rem; } }
+
+/* Light beige theme, faded hero photo */
+.hero { background: var(--paper); color: var(--ink); }
+.hero-media { background: var(--paper); }
+.hero-media img { opacity: .3; }
+.hero-media::before, .hero-media::after { display: none; }
+.nav { color: var(--ink); }
+.nav.solid { background: rgb(242 236 225 / .96); box-shadow: 0 1px 0 var(--line); }
+.burger span { background: var(--ink); }
+.menu { background: var(--paper); }
+.menu a { border-bottom-color: var(--line); }
+@media (min-width: 900px) { .menu { background: none; } }
+.logo-footer { filter: none; }
+.btn.outline { border-color: var(--ink); }

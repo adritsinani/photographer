@@ -16,8 +16,8 @@ export default function Hero() {
           <p>{site.intro}</p>
           <p className="disc">{site.disciplines}</p>
           <div className="cta-row">
-            <a className="btn light" href="#work">View the work</a>
-            <a className="btn ghost" href="#contact">Get in touch</a>
+            <a className="btn" href="#work">View the work</a>
+            <a className="btn outline" href="#contact">Get in touch</a>
           </div>
         </div>
       </div>

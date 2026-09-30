@@ -9,7 +9,7 @@ const fallback = Jost({ subsets: ["latin"], variable: "--font-fallback", weight:
 export const metadata = {
   title: `${site.name} — Photography & Films`,
   description: `${site.intro} ${site.disciplines}. Based in ${site.location}, available worldwide.`,
-  icons: { icon: "/logo.png" },
+  icons: { icon: "/logo-dark.png" },
 };
 
 export default function RootLayout({ children }) {
