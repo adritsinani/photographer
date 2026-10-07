@@ -83,7 +83,7 @@ export default function Home() {
         <p>
           <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">Instagram {site.instagram}</a><br />
           <a href={`mailto:${site.email}`}>{site.email}</a><br />
-          <a href="tel:+355683302020">{site.phone}</a>
+          <a href="tel:+355686006708">{site.phone}</a>
         </p>
         <p>© {new Date().getFullYear()} {site.name}</p>
       </footer>
